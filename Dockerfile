@@ -11,7 +11,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
     libc-client2007e-dev \
     libjpeg-dev \
     libkrb5-dev \
-    libldap2-dev \
     libmagickwand-dev \
     libmcrypt-dev \
     libmemcached-dev \
@@ -38,7 +37,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && docker-php-ext-enable imagick \
   && docker-php-ext-enable memcached \
   && docker-php-ext-enable oauth \
-  && docker-php-ext-enable redis \
   && docker-php-ext-install \
     bcmath \
     bz2 \
@@ -46,7 +44,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
     exif \
     gd \
     imap \
-    ldap \
     mcrypt \
     mbstring \
     mysql \
@@ -75,10 +72,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
 RUN apt-get -y install pdftk=2.02-2 ghostscript ca-certificates && \
     update-ca-certificates
 
-# memcache
-RUN yes '' | pecl install memcache && \
-    docker-php-ext-enable memcache
-
-# install mhsendmail
+# mhsendmail
 RUN curl -Lo /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
     chmod +x /usr/local/bin/mhsendmail
