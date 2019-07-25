@@ -20,7 +20,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
     libxml2-dev \
     libicu-dev \
     mysql-client \
-    postgresql-client-9.6 \
     pv \
     ssh \
     unzip \
