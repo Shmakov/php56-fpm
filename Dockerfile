@@ -31,7 +31,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && pecl install imagick \
   && pecl install memcached-2.2.0 \
   && pecl install oauth-1.2.3 \
-  && pecl install redis-2.2.8 \
   && pecl install xdebug-2.5.5 \
   && docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr \
   && docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
