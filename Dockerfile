@@ -73,7 +73,7 @@ RUN apt-get update && apt-get install -y pdftk=2.02-2 ghostscript ca-certificate
   && update-ca-certificates \
   && apt-get -y clean \
   && apt-get -y autoclean \
-  && apt-get -y autoremove \
+  && apt-get -y autoremove
 
 # mhsendmail
 RUN curl -Lo /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
