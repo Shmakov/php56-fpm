@@ -69,9 +69,12 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && rm -rf /var/lib/apt/lists/* && rm -rf && rm -rf /var/lib/cache/* && rm -rf /var/lib/log/* && rm -rf /tmp/*
 
 # pdftk, ghostscript, update CA certificates
-RUN apt-get -y install pdftk=2.02-2 ghostscript ca-certificates && \
-    update-ca-certificates
+RUN apt-get update && apt-get install -y pdftk=2.02-2 ghostscript ca-certificates \
+  && update-ca-certificates \
+  && apt-get -y clean \
+  && apt-get -y autoclean \
+  && apt-get -y autoremove \
 
 # mhsendmail
 RUN curl -Lo /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
-    chmod +x /usr/local/bin/mhsendmail
+  chmod +x /usr/local/bin/mhsendmail
