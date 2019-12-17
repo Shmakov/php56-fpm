@@ -1,8 +1,17 @@
+# Based on https://github.com/lando/lando/tree/master/plugins/lando-services/services/php/5.6-fpm
+
 FROM php:5.6-fpm-jessie
+
+#Issue with fetching http://deb.debian.org/debian/dists/jessie-updates/InRelease with docker
+#https://superuser.com/questions/1423486/issue-with-fetching-http-deb-debian-org-debian-dists-jessie-updates-inrelease
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 
 # Install dependencies we need
 RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && apt-get update && apt-get install -y \
+    pdftk=2.02-2 \
+    ghostscript \
+    ca-certificates \
     bzip2 \
     exiftool \
     git-core \
@@ -38,6 +47,7 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && docker-php-ext-enable memcached \
   && docker-php-ext-enable oauth \
   && docker-php-ext-install \
+    json \
     bcmath \
     bz2 \
     calendar \
@@ -51,12 +61,12 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
     opcache \
     pdo \
     pdo_mysql \
-    pdo_pgsql \
     soap \
     zip \
     intl \
     gettext \
     pcntl \
+    sockets \
   # Install composer
   && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
   && php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=1.8.4 \
@@ -67,13 +77,6 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && apt-get -y autoclean \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/* && rm -rf && rm -rf /var/lib/cache/* && rm -rf /var/lib/log/* && rm -rf /tmp/*
-
-# pdftk, ghostscript, update CA certificates
-RUN apt-get update && apt-get install -y pdftk=2.02-2 ghostscript ca-certificates \
-  && update-ca-certificates \
-  && apt-get -y clean \
-  && apt-get -y autoclean \
-  && apt-get -y autoremove
 
 # mhsendmail
 RUN curl -Lo /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
