@@ -78,6 +78,10 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/* && rm -rf && rm -rf /var/lib/cache/* && rm -rf /var/lib/log/* && rm -rf /tmp/*
 
+# Removing outdated Let's Encrypt certificate
+RUN sed -i 's/^mozilla\/DST_Root_CA_X3\.crt/!mozilla\/DST_Root_CA_X3\.crt/' /etc/ca-certificates.conf
+  && update-ca-certificates
+
 # mhsendmail
 RUN curl -Lo /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
   chmod +x /usr/local/bin/mhsendmail
